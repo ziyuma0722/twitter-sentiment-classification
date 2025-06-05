@@ -1,0 +1,10 @@
+                     learning rate        batch size          optimizer               regularization                scheduler                    other
+Pretraining:   relative big         relative big          AdamW             Weight decay (0.01)         linear / cosine       warmup, clipping
+Finetuning:    relative small      relative small       AdamW             Weight decay (0.01 - 0.1)  often linear decay   early stopping optional, PEFT sometimes
+
+Finetuning:
+Limited data, enough compute:  full fine-tuning, to prevent overfitting (early stopping, AdamW with weight decay, dropout)
+Limited data, limited compute: PEFT (LoRA, Adapters, Prefix Tuning), already less overfitting due to fewer trainable parameters, can be combined with AdamW (fewer weight decay), early stopping
+
+In LLM pretraining: AdamW optimizer, weight decay, learning rate warm-up + cosine/linear decay, mixed precision trainig, gradient clipping,
+no dropout in the transformer, but sometimes LayerNorm and embedding dropout
